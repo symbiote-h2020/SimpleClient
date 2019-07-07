@@ -1,7 +1,5 @@
 package hr.fer.symbiote.client.model;
 
-import java.util.List;
-
 public class CoreResponse<T> {
     private int status;
     private String message;

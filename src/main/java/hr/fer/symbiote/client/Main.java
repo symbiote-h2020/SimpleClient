@@ -20,7 +20,8 @@ import hr.fer.symbiote.client.model.Observation;
 import hr.fer.symbiote.client.model.SymbioteResource;
 
 public class Main {
-	public static final String BASE_URL = "https://symbiote-open.man.poznan.pl/coreInterface/";
+    public static final String BASE_URL = "https://symbiote-open.man.poznan.pl/coreInterface/";
+//    public static final String BASE_URL = "http://localhost:7000/coreInterface/";
 	
 	public static void main(String[] args) throws IOException {
 		System.out.println("*** security");
@@ -29,7 +30,8 @@ public class Main {
 		System.out.println("Security request: " + securityRequest);
 		
 		System.out.println("*** search"); 
-		CoreResponse<List<SymbioteResource>> searchResult = searchForResources(securityRequest, "fer1");
+//		CoreResponse<List<SymbioteResource>> searchResult = searchForResources(securityRequest, "iothackaton");
+		CoreResponse<List<SymbioteResource>> searchResult = searchForResources(securityRequest, "demoEnabler");
 		System.out.println("searchResult: " + searchResult);
 		
 		// choose one resource
@@ -61,24 +63,24 @@ public class Main {
 		con.setRequestMethod("POST");
 		
 		// log request
-//		for (Map.Entry<String, List<String>> entries : con.getRequestProperties().entrySet()) {    
-//		    String values = "";
-//		    for (String value : entries.getValue()) {
-//		        values += value + ",";
-//		    }
-//		    System.out.println("Request: " + entries.getKey() + " - " +  values );
-//		}
+		for (Map.Entry<String, List<String>> entries : con.getRequestProperties().entrySet()) {    
+		    String values = "";
+		    for (String value : entries.getValue()) {
+		        values += value + ",";
+		    }
+		    System.out.println("Request: " + entries.getKey() + " - " +  values );
+		}
 		
 		con.connect();
 		
 		// log reposnse
-//		for (Map.Entry<String, List<String>> entries : con.getHeaderFields().entrySet()) {
-//		    String values = "";
-//		    for (String value : entries.getValue()) {
-//		        values += value + ",";
-//		    }
-//		    System.out.println("Response: " +  entries.getKey() + " - " +  values );
-//		}
+		for (Map.Entry<String, List<String>> entries : con.getHeaderFields().entrySet()) {
+		    String values = "";
+		    for (String value : entries.getValue()) {
+		        values += value + ",";
+		    }
+		    System.out.println("Response: " +  entries.getKey() + " - " +  values );
+		}
 		
 		String token = con.getHeaderField("x-auth-token");
 		
@@ -97,8 +99,8 @@ public class Main {
 	}
 	
 	// https://github.com/symbiote-h2020/SymbioteCloud/wiki/3.2-Search-for-resources
-	private static CoreResponse<List<SymbioteResource>> searchForResources(String securityRequest, String platform) throws IOException {
-		URL url = new URL(BASE_URL + "query?platform_id=" + platform);
+	private static CoreResponse<List<SymbioteResource>> searchForResources(String securityRequest, String platformId) throws IOException {
+		URL url = new URL(BASE_URL + "query?platform_id=" + platformId);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		setSecurityHeaders(securityRequest, con);
